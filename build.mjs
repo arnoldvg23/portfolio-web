@@ -44,7 +44,9 @@ const size = (src) => {
 };
 const img = (root, src, alt, attrs = '') => {
   const [w, h] = size(src);
-  return `<img src="${root}assets/img/${src}" alt="${esc(alt)}" width="${w}" height="${h}" loading="lazy" decoding="async"${attrs}>`;
+  // Lazy by default; an explicit loading="..." in attrs wins (the first attribute in the tag is the one browsers use)
+  const loading = attrs.includes('loading=') ? '' : ' loading="lazy"';
+  return `<img src="${root}assets/img/${src}" alt="${esc(alt)}" width="${w}" height="${h}"${loading} decoding="async"${attrs}>`;
 };
 
 const svg = (d, cls = 'ico') => `<svg class="${cls}" viewBox="0 0 24 24" aria-hidden="true">${d}</svg>`;
